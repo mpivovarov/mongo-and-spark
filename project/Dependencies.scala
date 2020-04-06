@@ -1,3 +1,4 @@
+import Dependencies.Guice.scalaGuice
 import sbt.Keys.libraryDependencies
 import sbt._
 
@@ -6,26 +7,28 @@ object Dependencies {
   lazy val scalaTest   = "org.scalatest"     %% "scalatest"   % "3.0.8"
   lazy val scalaMock   = "org.scalamock"     %% "scalamock"   % "4.1.0"
   lazy val enumeratum  = "com.beachape"      %% "enumeratum"  % "1.5.13"
-  lazy val flyway      = "org.flywaydb"       % "flyway-core" % "5.0.7"
+//  lazy val flyway      = "org.flywaydb"       % "flyway-core" % "5.0.7"
 
   object Fuuid {
     lazy val fuuid       = "io.chrisdavenport" %% "fuuid"        % "0.2.0"
     lazy val fuuidoobie  = "io.chrisdavenport" %% "fuuid-doobie" % "0.2.0"
-    lazy val all = fuuid :: fuuidoobie :: Nil
+    lazy val all = Seq(fuuid, fuuidoobie)
   }
-  
+
   object Mongo {
-    lazy val fs2Mongo = "org.lyranthe" %% "fs2-mongodb" % "0.5.0"
-    lazy val all = fs2Mongo :: Nil
+    lazy val core = "org.mongodb" % "mongodb-driver-reactivestreams" % "4.0.1"
+    //    lazy val core = "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0"
+//    lazy val core = "org.lyranthe" %% "fs2-mongodb" % "0.5.0"
+    lazy val all = Seq(core)
 
   }
 
   object Logging {
     lazy val scalaLogging   = "com.typesafe.scala-logging" %% "scala-logging"  % "3.9.2"
     lazy val logbackClassic = "ch.qos.logback"             % "logback-classic" % "1.2.3"
-    lazy val all = scalaLogging :: logbackClassic :: Nil
+    lazy val all = Seq(scalaLogging, logbackClassic)
   }
-  
+
   object Http4s {
     val Version = "0.21.0-M5"
     lazy val http4sBlazeServer = "org.http4s"      %% "http4s-blaze-server" % Version
@@ -41,7 +44,12 @@ object Dependencies {
     lazy val scalaGuice = "net.codingwell" %% "scala-guice" % "4.2.2"
     lazy val all = Seq(scalaGuice)
   }
-  
+
+  object Streams {
+    lazy val reactive = "co.fs2" %% "fs2-reactive-streams" % "2.2.1"
+    lazy val all = Seq(reactive)
+  }
+
   object Circe {
     lazy val Version = "0.12.1"
     lazy val core    = "io.circe" %% "circe-core"            % Version
@@ -51,5 +59,5 @@ object Dependencies {
     lazy val config  = "io.circe" %% "circe-config"          % "0.6.1"
     lazy val all = Seq(core, generic, extras, parser, config)
   }
-  
+
 }

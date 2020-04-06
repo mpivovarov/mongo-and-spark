@@ -1,7 +1,10 @@
 package my.app.mongoexample.data
 
 import io.chrisdavenport.fuuid.FUUID
-import my.app.mongoexample.data.gen.{Generator, RandomValueGenerator}
+import my.app.mongoexample.data.gen.RandomValueGenerator
+import io.circe.syntax._
+import io.circe.generic.auto._
+import org.bson.Document
 
 case class CovidPatient(
   id: FUUID
@@ -10,7 +13,9 @@ case class CovidPatient(
 , address: String
 , chronic: Set[ChronicIllness]
 , status: CovidStatus
-)
+) {
+  def asDocument: Document = ???
+}
 
 
 object CovidPatient extends RandomValueGenerator {
@@ -24,4 +29,7 @@ object CovidPatient extends RandomValueGenerator {
     , randomOneOf(CovidStatus.values)
     )
   }
+
+  def apply(d: Document): CovidPatient = ???
+
 }

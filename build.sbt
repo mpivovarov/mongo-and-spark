@@ -15,6 +15,7 @@ libraryDependencies ++= Logging.all
 libraryDependencies ++= Circe.all
 libraryDependencies ++= Guice.all
 libraryDependencies ++= Mongo.all
+libraryDependencies ++= Streams.all
 
 scalacOptions ++= Seq(
   "-deprecation",

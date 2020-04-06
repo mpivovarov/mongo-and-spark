@@ -1,5 +1,12 @@
 package my.app.mongoexample.mongo
 
-class PatientDAO {
+import cats.effect.{ContextShift, IO}
+import com.mongodb.reactivestreams.client.MongoClient
+import javax.inject.{Inject, Singleton}
 
+@Singleton
+class PatientDAO @Inject()(val pers: MongoClient)(implicit val cs: ContextShift[IO]) extends IDAO {
+
+  override protected def database: String = "patient"
+  override protected def collection: String = "patients"
 }

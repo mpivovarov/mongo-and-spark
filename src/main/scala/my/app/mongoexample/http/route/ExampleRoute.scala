@@ -9,7 +9,10 @@ import org.http4s.HttpRoutes
 class ExampleRoute @Inject()(service: PatientService) extends Routing {
 
   override def routes: HttpRoutes[IO] = HttpRoutes.of[IO] {
-    case GET -> Root / "api" / "generate" / IntVar(count) =>
+    case GET -> Root / "api" / "patient" / "generate" / IntVar(count) =>
       service.generate(count).flatMap(_ => Ok())
+
+    case GET -> Root / "api" / "patient" =>
+      service.getAll.flatMap(_ => Ok())
   }
 }
