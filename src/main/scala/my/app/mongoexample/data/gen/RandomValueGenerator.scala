@@ -5,6 +5,7 @@ package my.app.mongoexample.data.gen
   */
 
 import java.time.{Instant, LocalDate}
+import java.util.UUID
 
 import cats.effect.IO
 import io.chrisdavenport.fuuid.FUUID
@@ -34,7 +35,8 @@ trait RandomValueGenerator {
   def randomOptInstant:Option[Instant]        = randomOptBoolean.map(_ => randomInstant)
   def randomOf[A](s:Seq[A]):Seq[A]            = s.filter(_ => randomBoolean)
   def randomOneOf[A](s:Seq[A]):A              = s(Random.nextInt(s.length))
-  def randomUUID: FUUID                       = FUUID.randomFUUID[IO].unsafeRunSync()
+  def randomFUUID: FUUID                      = FUUID.randomFUUID[IO].unsafeRunSync()
+  def randomUUID: UUID                        = UUID.randomUUID()
   def randomStringUUID: String                = randomUUID.toString
   def randomAmount(max: Int): BigDecimal      = BigDecimal(randomInt(max) * 0.01).setScale(2,RoundingMode.HALF_UP)
   def randomLongInRange(from: Long, to: Long): Long             = from + (Random.nextDouble()*(to - from)).toLong

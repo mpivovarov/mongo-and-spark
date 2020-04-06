@@ -69,7 +69,7 @@ object Generator extends RandomValueGenerator {
   implicit def instGen:  Generator[Instant] = new Generator[Instant] { override def apply: Instant = randomInstant }
   implicit def dateGen:  Generator[LocalDate] = new Generator[LocalDate] { override def apply: LocalDate = randomLocalDate }
   implicit def deciGen:  Generator[BigDecimal] = new Generator[BigDecimal] { override def apply: BigDecimal = randomBigDecimal(2) }
-  implicit def uuidGen:  Generator[FUUID] = new Generator[FUUID] { override def apply: FUUID = randomUUID }
+  implicit def uuidGen:  Generator[FUUID] = new Generator[FUUID] { override def apply: FUUID = randomFUUID }
 
 }
 

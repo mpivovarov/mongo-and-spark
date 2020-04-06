@@ -4,7 +4,7 @@ import enumeratum.EnumEntry.Snakecase
 import enumeratum._
 
 sealed trait ChronicIllness extends EnumEntry with Snakecase
-object ChronicIllness extends Enum[ChronicIllness] {
+object ChronicIllness extends Enum[ChronicIllness] with ReactiveMongoBsonEnum[ChronicIllness] {
   case object Hypertension extends ChronicIllness
   case object Diabetes extends ChronicIllness
   case object HeartFailure extends ChronicIllness

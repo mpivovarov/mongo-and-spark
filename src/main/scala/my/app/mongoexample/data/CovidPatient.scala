@@ -1,32 +1,36 @@
 package my.app.mongoexample.data
 
-import io.chrisdavenport.fuuid.FUUID
+import java.util.UUID
+
 import my.app.mongoexample.data.gen.RandomValueGenerator
-import io.circe.syntax._
-import io.circe.generic.auto._
 import org.bson.Document
 
 case class CovidPatient(
-  id: FUUID
+  id: Long
 , name: String
 , age: Int
 , address: String
-, chronic: Set[ChronicIllness]
-, status: CovidStatus
+//, chronic: Set[ChronicIllness]
+//, status: CovidStatus
 ) {
-  def asDocument: Document = ???
+  lazy val _id: String = id.toString()
+
+  def asDocument: Document = {
+    new Document(_id, this.asInstanceOf[AnyRef])
+  }
+
 }
 
 
 object CovidPatient extends RandomValueGenerator {
   def generate: CovidPatient = {
     CovidPatient(
-      randomUUID
+      randomLong
     , randomString
     , randomInt(100)
     , randomString
-    , randomOf(ChronicIllness.values).toSet
-    , randomOneOf(CovidStatus.values)
+//    , randomOf(ChronicIllness.values).toSet
+//    , randomOneOf(CovidStatus.values)
     )
   }
 

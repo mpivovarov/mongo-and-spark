@@ -11,12 +11,13 @@ import org.bson.Document
 class PatientService @Inject()(dao: PatientDAO) extends LazyLogging {
 
   def generate(count: Int): IO[Unit] = {
-    val items = Range(0, count).map { _ =>
+    val items = Range(0, count).toList.map { _ =>
       val cp = CovidPatient.generate
       logger.info(s"generated $cp")
-      cp
-    }.toList
-    dao.insertMany(items.map(i => new Document(i.id.toString(), Nil)))
+      cp.asDocument
+    }
+
+    dao.insertMany(items)
   }
 
   def getAll: IO[List[Document]] = {

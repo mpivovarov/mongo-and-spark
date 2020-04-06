@@ -6,8 +6,13 @@ object Dependencies {
 
   lazy val scalaTest   = "org.scalatest"     %% "scalatest"   % "3.0.8"
   lazy val scalaMock   = "org.scalamock"     %% "scalamock"   % "4.1.0"
-  lazy val enumeratum  = "com.beachape"      %% "enumeratum"  % "1.5.13"
 //  lazy val flyway      = "org.flywaydb"       % "flyway-core" % "5.0.7"
+
+  object Enumeratum {
+    lazy val core  = "com.beachape" %% "enumeratum"  % "1.5.13"
+    lazy val mongo = "com.beachape" %% "enumeratum-reactivemongo-bson" % "1.5.13"
+    lazy val all = Seq(core, mongo)
+  }
 
   object Fuuid {
     lazy val fuuid       = "io.chrisdavenport" %% "fuuid"        % "0.2.0"
@@ -16,10 +21,10 @@ object Dependencies {
   }
 
   object Mongo {
-    lazy val core = "org.mongodb" % "mongodb-driver-reactivestreams" % "4.0.1"
-    //    lazy val core = "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0"
+    lazy val reactive = "org.mongodb" % "mongodb-driver-reactivestreams" % "4.0.1"
+    lazy val core = "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0"
 //    lazy val core = "org.lyranthe" %% "fs2-mongodb" % "0.5.0"
-    lazy val all = Seq(core)
+    lazy val all = Seq(reactive, core)
 
   }
 

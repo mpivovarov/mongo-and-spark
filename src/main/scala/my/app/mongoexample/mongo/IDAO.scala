@@ -1,9 +1,12 @@
 package my.app.mongoexample.mongo
 
 import cats.effect.{ContextShift, IO}
-import com.mongodb.reactivestreams.client.MongoClient
+import com.mongodb.reactivestreams.client.{MongoClient, MongoCollection}
+import fs2.interop.reactivestreams._
 import org.bson.Document
+import org.bson.codecs.configuration.CodecRegistry
 
+import scala.collection.JavaConverters._
 
 trait IDAO {
   protected def pers: MongoClient
@@ -12,16 +15,17 @@ trait IDAO {
 
   protected def collection: String
 
+  protected def codec: CodecRegistry
+
   implicit val cs: ContextShift[IO]
 
-  import fs2.interop.reactivestreams._
-  import org.bson.Document
-  import scala.collection.JavaConverters._
+  private lazy val db: MongoCollection[Document] = pers
+    .getDatabase(database)
+    .getCollection(collection)
+    .withCodecRegistry(codec)
 
   def insertOne(item: Document): IO[Unit] = {
-    pers
-      .getDatabase(database)
-      .getCollection(collection)
+    db
       .insertOne(item)
       .toStream[IO]
       .compile
@@ -29,9 +33,7 @@ trait IDAO {
   }
 
   def insertMany(items: List[Document]): IO[Unit] = {
-    pers
-      .getDatabase(database)
-      .getCollection(collection)
+    db
       .insertMany(items.asJava)
       .toStream[IO]
       .compile
@@ -39,9 +41,7 @@ trait IDAO {
   }
 
   def selectAll: IO[List[Document]] = {
-    pers
-      .getDatabase(database)
-      .getCollection(collection)
+    db
       .find()
       .toStream[IO]
       .compile

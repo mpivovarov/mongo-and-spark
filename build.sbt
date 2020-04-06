@@ -8,7 +8,7 @@ scalaVersion := "2.12.10"
 
 libraryDependencies += scalaTest % Test
 libraryDependencies += scalaMock % Test
-libraryDependencies += enumeratum
+libraryDependencies ++= Enumeratum.all
 libraryDependencies ++= Http4s.all
 libraryDependencies ++= Fuuid.all
 libraryDependencies ++= Logging.all
@@ -25,4 +25,5 @@ scalacOptions ++= Seq(
   "-feature",
   "-Ypartial-unification",
   "-Xfatal-warnings",
+//  "-Ylog-classpath",
 )
