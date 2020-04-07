@@ -4,9 +4,9 @@ import cats.effect.{ContextShift, IO}
 import com.typesafe.scalalogging.LazyLogging
 import javax.inject.{Inject, Singleton}
 import my.app.mongoexample.data.CovidPatient
-import my.app.mongoexample.mongo.PatientDAO
 import my.app.mongoexample.mongo.codec.PatientFormatter
 import cats.implicits._
+import my.app.mongoexample.mongo.dao.PatientDAO
 import org.bson.Document
 
 @Singleton

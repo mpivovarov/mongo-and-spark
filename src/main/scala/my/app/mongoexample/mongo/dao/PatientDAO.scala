@@ -1,4 +1,4 @@
-package my.app.mongoexample.mongo
+package my.app.mongoexample.mongo.dao
 
 import cats.effect.{ContextShift, IO}
 import com.mongodb.reactivestreams.client.MongoClient
