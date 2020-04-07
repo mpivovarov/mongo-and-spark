@@ -1,5 +1,3 @@
-import Dependencies.Guice.scalaGuice
-import sbt.Keys.libraryDependencies
 import sbt._
 
 object Dependencies {
@@ -23,7 +21,6 @@ object Dependencies {
   object Mongo {
     lazy val reactive = "org.mongodb" % "mongodb-driver-reactivestreams" % "4.0.1"
     lazy val core = "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0"
-//    lazy val core = "org.lyranthe" %% "fs2-mongodb" % "0.5.0"
     lazy val all = Seq(reactive, core)
 
   }

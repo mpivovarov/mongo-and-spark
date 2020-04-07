@@ -4,18 +4,22 @@ import cats.effect.{ContextShift, IO}
 import com.mongodb.reactivestreams.client.{MongoClient, MongoCollection}
 import fs2.interop.reactivestreams._
 import org.bson.Document
+import org.bson.codecs.configuration.CodecRegistries.fromRegistries
 import org.bson.codecs.configuration.CodecRegistry
+import org.mongodb.scala.bson.codecs.DEFAULT_CODEC_REGISTRY
 
 import scala.collection.JavaConverters._
 
 trait IDAO {
   protected def pers: MongoClient
 
-  protected def database: String
+  protected val database: String
 
-  protected def collection: String
+  protected val collection: String
 
-  protected def codec: CodecRegistry
+  protected val codec: CodecRegistry = fromRegistries(
+      DEFAULT_CODEC_REGISTRY
+    )
 
   implicit val cs: ContextShift[IO]
 
