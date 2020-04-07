@@ -9,13 +9,9 @@ import org.http4s.server.Router
 import org.http4s.server.blaze.BlazeServerBuilder
 import cats.implicits._
 
-import scala.concurrent.ExecutionContext.global
-
 class Server @Inject()(
  routeSet: Set[Routing]
-) {
-  implicit val cs: ContextShift[IO] = IO.contextShift(global)
-  implicit val timer: Timer[IO] = IO.timer(global)
+)(implicit cs: ContextShift[IO], timer: Timer[IO]) {
 
   def runForever: IO[Unit] = {
 

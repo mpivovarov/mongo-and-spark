@@ -29,7 +29,7 @@ object App extends IOApp {
   private def createServices(resources: Resources): List[IO[_]] = {
     val (pers :: HNil) = resources
 
-    val module = new AppModule(pers, this.contextShift)
+    val module = new AppModule(pers, this.contextShift, this.timer)
     val injector  = Guice.createInjector(module)
     val server    = injector.getInstance(classOf[Server])
 
