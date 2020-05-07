@@ -16,6 +16,7 @@ libraryDependencies ++= Circe.all
 libraryDependencies ++= Guice.all
 libraryDependencies ++= Mongo.all
 libraryDependencies ++= Streams.all
+libraryDependencies ++= Spark.all
 
 scalacOptions ++= Seq(
   "-deprecation",
@@ -24,6 +25,11 @@ scalacOptions ++= Seq(
   "-language:postfixOps",
   "-feature",
   "-Ypartial-unification",
-  "-Xfatal-warnings",
+  "-Xfatal-warnings"
 //  "-Ylog-classpath",
 )
+
+sparkVersion := "2.4.5"
+
+sparkComponents ++= Seq("sql")
+

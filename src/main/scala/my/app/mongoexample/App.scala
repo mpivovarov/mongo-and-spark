@@ -7,10 +7,12 @@ import my.app.mongoexample.mongo.MongoPersistence
 import shapeless.{::, HNil}
 import cats.implicits._
 import com.mongodb.reactivestreams.client.MongoClient
+import my.app.mongoexample.spark.Spark
+import org.apache.spark.SparkContext
 
 object App extends IOApp {
 
-  type Resources = MongoClient :: HNil
+  type Resources = MongoClient :: SparkContext :: HNil
 
   override def run(args: List[String]): IO[ExitCode] = {
     createResources.use { runServices } map (_ => ExitCode.Success)
@@ -19,7 +21,8 @@ object App extends IOApp {
   private def createResources: Resource[IO, Resources] = {
     for {
       pers <- MongoPersistence.getInstance
-    } yield pers :: HNil
+      sc   <- Spark.getInstance
+    } yield pers :: sc :: HNil
   }
 
   private def runServices(resources: Resources): IO[_] = {
@@ -27,9 +30,9 @@ object App extends IOApp {
   }
 
   private def createServices(resources: Resources): List[IO[_]] = {
-    val (pers :: HNil) = resources
+    val (pers :: sc :: HNil) = resources
 
-    val module = new AppModule(pers, this.contextShift, this.timer)
+    val module = new AppModule(pers, sc, this.contextShift, this.timer)
     val injector  = Guice.createInjector(module)
     val server    = injector.getInstance(classOf[Server])
 
