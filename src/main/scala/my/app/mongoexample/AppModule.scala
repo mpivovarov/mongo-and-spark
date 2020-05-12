@@ -6,14 +6,14 @@ import com.mongodb.reactivestreams.client.MongoClient
 import my.app.mongoexample.http.route.{ExampleRoute, HealthCheckRoute}
 import my.app.mongoexample.http.{Routing, Server}
 import net.codingwell.scalaguice.{ScalaModule, ScalaMultibinder}
-import org.apache.spark.SparkContext
+import org.apache.spark.sql.SparkSession
 
-class AppModule(pers: MongoClient, sc: SparkContext, cs: ContextShift[IO], timer: Timer[IO]) extends ScalaModule {
+class AppModule(pers: MongoClient, sc: SparkSession, cs: ContextShift[IO], timer: Timer[IO]) extends ScalaModule {
 
   override def configure(): Unit = {
     bind[Server]
     bind[MongoClient].toInstance(pers)
-    bind[SparkContext].toInstance(sc)
+    bind[SparkSession].toInstance(sc)
     bind(new TypeLiteral[ContextShift[IO]](){}).toInstance(cs)
     bind(new TypeLiteral[Timer[IO]](){}).toInstance(timer)
     val multiBinding = ScalaMultibinder.newSetBinder[Routing](binder)

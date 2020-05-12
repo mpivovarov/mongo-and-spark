@@ -8,11 +8,11 @@ import shapeless.{::, HNil}
 import cats.implicits._
 import com.mongodb.reactivestreams.client.MongoClient
 import my.app.mongoexample.spark.Spark
-import org.apache.spark.SparkContext
+import org.apache.spark.sql.SparkSession
 
 object App extends IOApp {
 
-  type Resources = MongoClient :: SparkContext :: HNil
+  type Resources = MongoClient :: SparkSession :: HNil
 
   override def run(args: List[String]): IO[ExitCode] = {
     createResources.use { runServices } map (_ => ExitCode.Success)

@@ -1,21 +1,25 @@
 package my.app.mongoexample.spark
 
 import cats.effect.{ContextShift, IO, Resource, Timer}
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.{SparkConf, SparkContext}
 
 object Spark {
-  def getInstance(implicit c: ContextShift[IO], t: Timer[IO]): Resource[IO, SparkContext] = {
-    val acquire: IO[SparkContext] = {
+  def getInstance(implicit c: ContextShift[IO], t: Timer[IO]): Resource[IO, SparkSession] = {
+    val acquire: IO[SparkSession] = {
       IO.delay {
-        val conf = new SparkConf().setAppName("MongoAndSpark").setMaster("local[*]")
-        new SparkContext(conf)
+        SparkSession
+          .builder()
+          .master("local[*]")
+          .appName("MongoAndSpark")
+          .getOrCreate()
       }
     }
 
-    val release: SparkContext => IO[Unit] = { sp: SparkContext =>
-      IO.delay(sp.cancelAllJobs())
+    val release: SparkSession => IO[Unit] = { sp: SparkSession =>
+      IO.delay(sp.sparkContext.stop())
     }
 
-    Resource.make[IO, SparkContext](acquire)(release)
+    Resource.make[IO, SparkSession](acquire)(release)
   }
 }

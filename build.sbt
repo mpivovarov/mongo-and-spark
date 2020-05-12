@@ -4,7 +4,7 @@ name := "mongo-and-spark"
 
 version := "0.1"
 
-scalaVersion := "2.12.10"
+scalaVersion := "2.12.8"
 
 libraryDependencies += scalaTest % Test
 libraryDependencies += scalaMock % Test
@@ -29,7 +29,7 @@ scalacOptions ++= Seq(
 //  "-Ylog-classpath",
 )
 
-sparkVersion := "2.4.5"
-
-sparkComponents ++= Seq("sql")
+//sparkVersion := "2.4.5"
+//
+//sparkComponents ++= Seq("sql")
 

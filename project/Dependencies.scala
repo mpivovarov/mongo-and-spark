@@ -65,7 +65,8 @@ object Dependencies {
 
   object Spark {
     lazy val core = "org.apache.spark" %% "spark-core" % "2.4.5"
-    lazy val all = Seq(core)
+    lazy val sql = "org.apache.spark" %% "spark-sql" % "2.4.5"
+    lazy val all = Seq(core, sql)
   }
 
 }
